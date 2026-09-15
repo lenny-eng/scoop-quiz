@@ -233,6 +233,24 @@
     background: var(--teal);
     border-radius: 50%;
   }
+  .opt-text { flex: 1; }
+  .opt-thumbs { display: flex; gap: 6px; flex: none; }
+  .opt-thumb {
+    width: 52px; height: 52px;
+    flex: none;
+    border-radius: 4px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    background: #f2f4f3;
+  }
+  .opt-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .opt-thumb-label {
+    position: relative;
+  }
+  @media (max-width: 480px) {
+    .opt { flex-wrap: wrap; }
+    .opt-thumbs { width: 100%; padding-left: 29px; margin-top: 2px; }
+  }
 
   /* ---------- results ---------- */
   .result-eyebrow { font-family: "IBM Plex Mono", monospace; font-size: 0.74rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); margin: 0 0 6px; }
@@ -350,8 +368,13 @@
       { text: "Personal, at-home use only", p: ["SC100","SC300","H905","H1000"] }
     ]},
     { eyebrow: "02 — Body position", title: "How do you want to train?", options: [
-      { text: "Seated the whole time", p: ["SC100","SC300","HR3500"] },
-      { text: "Standing, for a more intense whole-body workout", p: ["H905","H1000","HLT3500"] }
+      { text: "Seated the whole time", p: ["SC100","SC300","HR3500"], images: [
+        { src: "images/sc300.jpg", alt: "TheraScoop" },
+        { src: "images/hr3500.png", alt: "HR3500" }
+      ]},
+      { text: "Standing, for a more intense whole-body workout", p: ["H905","H1000","HLT3500"], images: [
+        { src: "images/h1000.png", alt: "H1000" }
+      ]}
     ]},
     { eyebrow: "03 — Recovery & balance", title: "Where are you starting from?", options: [
       { text: "Recovering from an injury or surgery, or deconditioned — I need to start gently", p: ["SC100","HR3500"] },
@@ -451,7 +474,13 @@
       var btn = document.createElement("button");
       btn.type = "button";
       btn.className = "opt" + (selected === i ? " selected" : "");
-      btn.innerHTML = '<span class="ring"></span><span>' + opt.text + "</span>";
+      var thumbsHtml = "";
+      if (opt.images && opt.images.length) {
+        thumbsHtml = '<span class="opt-thumbs">' + opt.images.map(function (img) {
+          return '<span class="opt-thumb"><img src="' + img.src + '" alt="' + img.alt + '" loading="lazy"></span>';
+        }).join("") + "</span>";
+      }
+      btn.innerHTML = '<span class="ring"></span><span class="opt-text">' + opt.text + "</span>" + thumbsHtml;
       btn.addEventListener("click", function () { selectAnswer(i); });
       opts.appendChild(btn);
     });
