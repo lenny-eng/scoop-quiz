@@ -1,0 +1,549 @@
+<title>Find Your Lateral Trainer</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;700;800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #eef2f0;
+    --surface: #ffffff;
+    --surface-2: #e4ebe7;
+    --border: #cdd8d2;
+    --ink: #142420;
+    --muted: #57685f;
+    --teal: #2f6f62;
+    --teal-ink: #205148;
+    --amber: #b96a26;
+    --amber-ink: #8f501b;
+    --focus: #1f6f8b;
+    --shadow: 0 1px 2px rgba(20, 36, 32, 0.06), 0 8px 24px -12px rgba(20, 36, 32, 0.18);
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #101c19;
+      --surface: #172622;
+      --surface-2: #1e302b;
+      --border: #2c423b;
+      --ink: #edeae1;
+      --muted: #9db0a8;
+      --teal: #5cb49f;
+      --teal-ink: #8ed2c1;
+      --amber: #e2924f;
+      --amber-ink: #f0ae76;
+      --focus: #6cc3e0;
+      --shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 12px 32px -14px rgba(0, 0, 0, 0.55);
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #101c19;
+    --surface: #172622;
+    --surface-2: #1e302b;
+    --border: #2c423b;
+    --ink: #edeae1;
+    --muted: #9db0a8;
+    --teal: #5cb49f;
+    --teal-ink: #8ed2c1;
+    --amber: #e2924f;
+    --amber-ink: #f0ae76;
+    --focus: #6cc3e0;
+    --shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 12px 32px -14px rgba(0, 0, 0, 0.55);
+  }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; }
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: "IBM Plex Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    padding-inline: 20px;
+    padding-block: 28px;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+  }
+  .app { width: 100%; max-width: 640px; display: flex; flex-direction: column; gap: 20px; }
+
+  .brand {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 12px;
+  }
+  .brand-name {
+    font-family: "Big Shoulders Display", "Arial Narrow", sans-serif;
+    font-weight: 800;
+    font-size: 1.05rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--teal-ink);
+  }
+  .brand-sub {
+    font-family: "IBM Plex Mono", "SFMono-Regular", Menlo, monospace;
+    font-size: 0.72rem;
+    color: var(--muted);
+    letter-spacing: 0.02em;
+  }
+
+  .panel {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    box-shadow: var(--shadow);
+    padding: 28px 24px;
+  }
+  @media (max-width: 480px) { .panel { padding: 22px 16px; } }
+
+  /* ---------- intro ---------- */
+  .intro h1 {
+    font-family: "Big Shoulders Display", "Arial Narrow", sans-serif;
+    font-weight: 800;
+    font-size: clamp(2rem, 6vw, 2.7rem);
+    line-height: 1.02;
+    letter-spacing: -0.01em;
+    margin: 0 0 14px;
+    text-wrap: balance;
+  }
+  .intro p {
+    font-size: 1rem;
+    line-height: 1.55;
+    color: var(--muted);
+    max-width: 46ch;
+    margin: 0 0 22px;
+  }
+  .intro-meta {
+    display: flex;
+    gap: 18px;
+    flex-wrap: wrap;
+    margin-bottom: 24px;
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.78rem;
+    color: var(--muted);
+  }
+  .intro-meta b { color: var(--ink); font-variant-numeric: tabular-nums; }
+  .lineup {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    margin: 0 0 26px;
+  }
+  @media (max-width: 480px) { .lineup { grid-template-columns: repeat(2, 1fr); } }
+  .lineup-item {
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 8px 10px;
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.72rem;
+    color: var(--muted);
+  }
+  .lineup-item b { display: block; color: var(--ink); font-family: "Big Shoulders Display", sans-serif; font-size: 0.95rem; font-weight: 700; letter-spacing: 0.01em; }
+
+  button.cta {
+    appearance: none;
+    border: none;
+    cursor: pointer;
+    background: var(--teal);
+    color: #fbfbf8;
+    font-family: "IBM Plex Sans", sans-serif;
+    font-weight: 600;
+    font-size: 0.98rem;
+    padding: 14px 22px;
+    border-radius: 4px;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    transition: transform 0.12s ease, background 0.12s ease;
+  }
+  button.cta:hover { background: var(--teal-ink); }
+  button.cta:active { transform: scale(0.98); }
+  button.cta:focus-visible, a:focus-visible, .opt:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+
+  /* ---------- progress dial ---------- */
+  .dial-row { display: flex; align-items: center; gap: 14px; margin-bottom: 4px; }
+  .dial { flex: none; }
+  .dial-label {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.74rem;
+    color: var(--muted);
+    letter-spacing: 0.02em;
+  }
+  .dial-label b { color: var(--ink); font-variant-numeric: tabular-nums; }
+  .back-link {
+    margin-left: auto;
+    font-family: "IBM Plex Sans", sans-serif;
+    font-size: 0.82rem;
+    color: var(--muted);
+    text-decoration: none;
+    cursor: pointer;
+    border: none;
+    background: none;
+    padding: 6px 4px;
+  }
+  .back-link:hover { color: var(--ink); }
+
+  .eyebrow {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.74rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--amber-ink);
+    margin: 0 0 10px;
+  }
+  .q-title {
+    font-family: "Big Shoulders Display", sans-serif;
+    font-weight: 700;
+    font-size: clamp(1.5rem, 4.6vw, 1.9rem);
+    line-height: 1.1;
+    margin: 0 0 20px;
+    text-wrap: balance;
+  }
+
+  .opts { display: flex; flex-direction: column; gap: 8px; }
+  .opt {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-align: left;
+    width: 100%;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 13px 14px;
+    font-family: "IBM Plex Sans", sans-serif;
+    font-size: 0.94rem;
+    color: var(--ink);
+    cursor: pointer;
+    transition: border-color 0.12s ease, background 0.12s ease;
+  }
+  .opt:hover { border-color: var(--teal); background: var(--surface-2); }
+  .opt .ring {
+    flex: none;
+    width: 17px; height: 17px;
+    border-radius: 50%;
+    border: 2px solid var(--border);
+    position: relative;
+  }
+  .opt:hover .ring { border-color: var(--teal); }
+  .opt.selected { border-color: var(--teal); background: var(--surface-2); }
+  .opt.selected .ring { border-color: var(--teal); }
+  .opt.selected .ring::after {
+    content: "";
+    position: absolute; inset: 3px;
+    background: var(--teal);
+    border-radius: 50%;
+  }
+
+  /* ---------- results ---------- */
+  .result-eyebrow { font-family: "IBM Plex Mono", monospace; font-size: 0.74rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); margin: 0 0 6px; }
+  .result-head { font-family: "Big Shoulders Display", sans-serif; font-weight: 800; font-size: clamp(1.7rem, 5vw, 2.2rem); margin: 0 0 18px; text-wrap: balance; }
+
+  .match-card {
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--teal);
+    border-radius: 4px;
+    padding: 20px;
+    margin-bottom: 12px;
+    background: var(--surface);
+  }
+  .match-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; flex-wrap: wrap; }
+  .match-name { font-family: "Big Shoulders Display", sans-serif; font-weight: 800; font-size: 1.5rem; margin: 0; }
+  .match-code { font-family: "IBM Plex Mono", monospace; font-size: 0.75rem; color: var(--muted); }
+  .match-price { font-family: "IBM Plex Mono", monospace; font-weight: 500; font-size: 1.05rem; color: var(--teal-ink); font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .match-tagline { color: var(--muted); font-size: 0.92rem; margin: 6px 0 14px; max-width: 50ch; }
+  .match-specs { display: flex; gap: 18px; flex-wrap: wrap; margin-bottom: 16px; }
+  .spec { font-family: "IBM Plex Mono", monospace; font-size: 0.76rem; color: var(--muted); }
+  .spec b { display: block; color: var(--ink); font-size: 0.86rem; font-variant-numeric: tabular-nums; }
+  a.shop {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    text-decoration: none;
+    background: var(--teal);
+    color: #fbfbf8;
+    font-weight: 600;
+    font-size: 0.88rem;
+    padding: 10px 16px;
+    border-radius: 4px;
+  }
+  a.shop:hover { background: var(--teal-ink); }
+
+  .rank-title { font-family: "IBM Plex Mono", monospace; font-size: 0.74rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); margin: 28px 0 10px; }
+  .rank-row { display: grid; grid-template-columns: 88px 1fr 34px; align-items: center; gap: 10px; padding: 7px 0; }
+  .rank-name { font-size: 0.86rem; color: var(--muted); }
+  .rank-row.top .rank-name { color: var(--ink); font-weight: 600; }
+  .rank-bar-track { height: 6px; background: var(--surface-2); border-radius: 3px; overflow: hidden; }
+  .rank-bar-fill { height: 100%; background: var(--amber); border-radius: 3px; }
+  .rank-row.top .rank-bar-fill { background: var(--teal); }
+  .rank-score { font-family: "IBM Plex Mono", monospace; font-size: 0.78rem; color: var(--muted); text-align: right; font-variant-numeric: tabular-nums; }
+
+  .retake { margin-top: 22px; background: none; border: 1px solid var(--border); color: var(--muted); font-family: "IBM Plex Sans", sans-serif; font-size: 0.86rem; padding: 10px 16px; border-radius: 4px; cursor: pointer; }
+  .retake:hover { color: var(--ink); border-color: var(--ink); }
+
+  [hidden] { display: none !important; }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { transition: none !important; }
+  }
+</style>
+
+<div class="app">
+  <div class="brand">
+    <div class="brand-name">Helix &amp; Scoop</div>
+    <div class="brand-sub">Lateral Trainer Finder</div>
+  </div>
+
+  <!-- INTRO -->
+  <section class="panel intro" id="view-intro">
+    <h1>Find your lateral trainer.</h1>
+    <p>Ten quick questions about how you'll train, who's using it, and what matters most — matched against the full lineup, from the $149 Scoop to the commercial-grade HLT3500.</p>
+    <div class="intro-meta">Takes about <b>90 seconds</b> · <b>10</b> questions · <b>6</b> models compared</div>
+    <div class="lineup" id="lineup-preview"></div>
+    <button class="cta" id="start-btn">Start the quiz →</button>
+  </section>
+
+  <!-- QUESTION -->
+  <section id="view-question" hidden>
+    <div class="dial-row">
+      <svg class="dial" id="dial-svg" width="44" height="44" viewBox="0 0 44 44" aria-hidden="true"></svg>
+      <div class="dial-label">Question <b id="q-num">1</b> of <b id="q-total">10</b></div>
+      <button class="back-link" id="back-btn">← Back</button>
+    </div>
+    <div class="panel">
+      <p class="eyebrow" id="q-eyebrow"></p>
+      <h2 class="q-title" id="q-title"></h2>
+      <div class="opts" id="q-opts"></div>
+    </div>
+  </section>
+
+  <!-- RESULT -->
+  <section id="view-result" hidden>
+    <p class="result-eyebrow">Your match</p>
+    <h2 class="result-head" id="result-head"></h2>
+    <div id="result-cards"></div>
+    <p class="rank-title">Full lineup, ranked for you</p>
+    <div id="rank-list"></div>
+    <button class="retake" id="retake-btn">↺ Retake the quiz</button>
+  </section>
+</div>
+
+<script>
+(function () {
+  "use strict";
+
+  var PRODUCTS = {
+    SC100:   { name: "Scoop®",            code: "SC100",   price: "$149",   tagline: "Gentle joint therapy — the most affordable way in.", specs: [["Resistance","Knob · light–moderate"],["Weight cap.","250 lbs"],["Unit weight","≈18 lbs"]], url: "https://scoopfit.com/products/the-scoop" },
+    SC300:   { name: "TheraScoop®",       code: "SC300",   price: "$279",   tagline: "Therapy and real cardio, in one portable machine.", specs: [["Resistance","10 magnetic levels"],["Weight cap.","315 lbs"],["Unit weight","27 lbs · carry handle"]], url: "https://scoopfit.com/products/sc300-therascoop-lateral-trainer" },
+    H905:    { name: "Eco Essential",     code: "H905",    price: "$2,499", tagline: "Full-size and self-powered — no outlet, no extras.", specs: [["Resistance","8 levels · manual knob"],["Weight cap.","300 lbs"],["Power","Battery, display only"]], url: "https://helixfitness.com/products/model-h905-3d" },
+    H1000:   { name: "Digital Essential", code: "H1000",   price: "$3,999", tagline: "Touchscreen, apps, and on-demand classes at home.", specs: [["Resistance","20 electronic levels"],["Weight cap.","300 lbs"],["Display","10\" touchscreen"]], url: "https://helixfitness.com/products/model-h1000-3d" },
+    HLT3500: { name: "Club Connect",      code: "HLT3500", price: "$4,999", tagline: "Commercial-grade standing trainer, built for 24/7 use.", specs: [["Resistance","20 electronic levels"],["Weight cap.","350 lbs"],["Classes","Built in — no phone needed"]], url: "https://helixfitness.com/products/model-hlt3500-3d" },
+    HR3500:  { name: "HR3500",            code: "HR3500",  price: "$4,999", tagline: "Commercial-grade seated trainer for clinics and gyms.", specs: [["Resistance","20 electronic levels"],["Weight cap.","350 lbs"],["Warranty","3 yr parts · 5 yr residential"]], url: "https://helixfitness.com/products/model-hr3500" }
+  };
+  var PRODUCT_ORDER = ["SC100", "SC300", "H905", "H1000", "HLT3500", "HR3500"];
+
+  var QUESTIONS = [
+    { eyebrow: "01 — Setting", title: "Who are you buying for?", options: [
+      { text: "A gym or other heavy-use commercial setting", p: ["HLT3500","HR3500"] },
+      { text: "A physical therapy practice or clinical setting", p: ["HR3500","SC300"] },
+      { text: "A small private gym or light-commercial setting, like a hotel", p: ["HLT3500"] },
+      { text: "Personal, at-home use — but I want clinic-grade tech at a home price", p: ["SC300"] },
+      { text: "Personal, at-home use only", p: ["SC100","SC300","H905","H1000"] }
+    ]},
+    { eyebrow: "02 — Body position", title: "How do you want to train?", options: [
+      { text: "Seated the whole time", p: ["SC100","SC300","HR3500"] },
+      { text: "Standing, for a more intense whole-body workout", p: ["H905","H1000","HLT3500"] }
+    ]},
+    { eyebrow: "03 — Recovery & balance", title: "Where are you starting from?", options: [
+      { text: "Recovering from an injury or surgery, or deconditioned — I need to start gently", p: ["SC100","HR3500"] },
+      { text: "I have balance issues and I'm concerned about falling", p: ["SC100","SC300","HR3500"] },
+      { text: "I need zero-impact movement that won't aggravate bone-on-bone joints", p: ["SC100","SC300","HR3500"] },
+      { text: "No injury — I'm training for general fitness", p: ["H905","H1000","HLT3500","SC300"] }
+    ]},
+    { eyebrow: "04 — Resistance & intensity", title: "How much resistance do you want to control?", options: [
+      { text: "A simple twist knob is fine — I don't need a computer", p: ["SC100","H905"] },
+      { text: "Digital resistance levels I can progress through over time", p: ["SC300","H1000","HLT3500","HR3500"] },
+      { text: "The most intense standing workout available", p: ["H905","H1000","HLT3500"] },
+      { text: "The most resistance available in a portable, seated machine", p: ["SC300"] },
+      { text: "Maximum resistance and the most advanced electronic control, period", p: ["HLT3500","HR3500"] }
+    ]},
+    { eyebrow: "05 — Weight capacity", title: "What's the highest user weight it needs to support?", options: [
+      { text: "Over 300 lbs", p: ["HLT3500","HR3500"] },
+      { text: "250–300 lbs", p: ["SC300","H905","H1000"] },
+      { text: "Under 250 lbs — keep it simple", p: ["SC100"] }
+    ]},
+    { eyebrow: "06 — Power & tech", title: "How much tech do you want on board?", options: [
+      { text: "No outlet, please — fully manual or battery only", p: ["SC100","SC300","H905"] },
+      { text: "A built-in touchscreen or console with real-time stats", p: ["H1000","HLT3500","HR3500"] },
+      { text: "Classes on my own phone or tablet", p: ["H905","H1000"] },
+      { text: "Classes built into the machine — no phone or tablet needed", p: ["HLT3500"] },
+      { text: "A simple display, no smart features", p: ["H905"] }
+    ]},
+    { eyebrow: "07 — Portability & space", title: "How much does portability matter?", options: [
+      { text: "It needs to be the lightest thing I can stash or travel with", p: ["SC100"] },
+      { text: "Portable, but with more resistance range for a growing routine", p: ["SC300"] },
+      { text: "I want a permanent, full-size home gym machine", p: ["H905","H1000","HLT3500","HR3500"] },
+      { text: "I'll pedal regularly at my desk while I work", p: ["SC300"] }
+    ]},
+    { eyebrow: "08 — Budget", title: "What's your budget?", options: [
+      { text: "The least expensive way to try lateral training", p: ["SC100"] },
+      { text: "Mid-range, portable, with more features", p: ["SC300"] },
+      { text: "Budget full-size machine, no bells and whistles", p: ["H905"] },
+      { text: "Premium, interactive home machine", p: ["H1000"] },
+      { text: "Top-of-the-line, commercial-grade — price is no object", p: ["HLT3500","HR3500"] }
+    ]},
+    { eyebrow: "09 — Warranty", title: "How important is warranty coverage?", options: [
+      { text: "I want the longest warranty available", p: ["HLT3500","HR3500"] },
+      { text: "I'd add extended protection to a portable Scoop", p: ["SC100","SC300"] },
+      { text: "Standard coverage is fine", p: ["SC100","SC300","H905","H1000","HLT3500","HR3500"] }
+    ]},
+    { eyebrow: "10 — Finish", title: "Does color matter to you?", options: [
+      { text: "Silver", p: ["H1000"] },
+      { text: "Black", p: ["HR3500","HLT3500"] },
+      { text: "White", p: ["H905"] },
+      { text: "Doesn't matter to me", p: ["SC100","SC300","H905","H1000","HLT3500","HR3500"] }
+    ]}
+  ];
+
+  var state = { view: "intro", qIndex: 0, answers: new Array(QUESTIONS.length).fill(null) };
+
+  var $ = function (id) { return document.getElementById(id); };
+
+  function buildLineupPreview() {
+    var el = $("lineup-preview");
+    PRODUCT_ORDER.forEach(function (code) {
+      var p = PRODUCTS[code];
+      var div = document.createElement("div");
+      div.className = "lineup-item";
+      div.innerHTML = "<b>" + p.name + "</b>" + p.price;
+      el.appendChild(div);
+    });
+  }
+
+  function renderDial(index) {
+    var svg = $("dial-svg");
+    var total = QUESTIONS.length;
+    var cx = 22, cy = 22, r = 17;
+    var parts = ['<circle cx="' + cx + '" cy="' + cy + '" r="' + r + '" fill="none" stroke="var(--border)" stroke-width="2"></circle>'];
+    for (var i = 0; i < total; i++) {
+      var a = (Math.PI * 2 * i / total) - Math.PI / 2;
+      var x1 = cx + Math.cos(a) * (r - 3), y1 = cy + Math.sin(a) * (r - 3);
+      var x2 = cx + Math.cos(a) * (r + 3), y2 = cy + Math.sin(a) * (r + 3);
+      var done = i < index;
+      parts.push('<line x1="' + x1 + '" y1="' + y1 + '" x2="' + x2 + '" y2="' + y2 + '" stroke="' + (done ? "var(--teal)" : "var(--border)") + '" stroke-width="2.4" stroke-linecap="round"></line>');
+    }
+    parts.push('<text x="' + cx + '" y="' + (cy + 4) + '" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11" fill="var(--ink)">' + (index + 1) + '</text>');
+    svg.innerHTML = parts.join("");
+  }
+
+  function renderQuestion() {
+    var q = QUESTIONS[state.qIndex];
+    $("q-num").textContent = state.qIndex + 1;
+    $("q-total").textContent = QUESTIONS.length;
+    $("q-eyebrow").textContent = q.eyebrow;
+    $("q-title").textContent = q.title;
+    $("back-btn").hidden = state.qIndex === 0;
+    renderDial(state.qIndex);
+
+    var opts = $("q-opts");
+    opts.innerHTML = "";
+    var selected = state.answers[state.qIndex];
+    q.options.forEach(function (opt, i) {
+      var btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "opt" + (selected === i ? " selected" : "");
+      btn.innerHTML = '<span class="ring"></span><span>' + opt.text + "</span>";
+      btn.addEventListener("click", function () { selectAnswer(i); });
+      opts.appendChild(btn);
+    });
+  }
+
+  function selectAnswer(i) {
+    state.answers[state.qIndex] = i;
+    if (state.qIndex < QUESTIONS.length - 1) {
+      setTimeout(function () {
+        state.qIndex++;
+        renderQuestion();
+      }, 160);
+      renderQuestion();
+    } else {
+      setTimeout(showResult, 160);
+      renderQuestion();
+    }
+  }
+
+  function computeScores() {
+    var scores = {}; PRODUCT_ORDER.forEach(function (c) { scores[c] = 0; });
+    state.answers.forEach(function (ai, qi) {
+      if (ai === null) return;
+      QUESTIONS[qi].options[ai].p.forEach(function (code) { scores[code]++; });
+    });
+    return scores;
+  }
+
+  function showResult() {
+    setView("result");
+    var scores = computeScores();
+    var ranked = PRODUCT_ORDER.slice().sort(function (a, b) { return scores[b] - scores[a]; });
+    var top = scores[ranked[0]];
+    var winners = ranked.filter(function (c) { return scores[c] === top; });
+
+    $("result-head").textContent = winners.length > 1
+      ? "It's close between " + winners.map(function (c) { return PRODUCTS[c].name; }).join(" and ") + "."
+      : "Meet the " + PRODUCTS[winners[0]].name + ".";
+
+    var cardsEl = $("result-cards");
+    cardsEl.innerHTML = "";
+    winners.forEach(function (code) {
+      var p = PRODUCTS[code];
+      var card = document.createElement("div");
+      card.className = "match-card";
+      var specsHtml = p.specs.map(function (s) { return '<div class="spec">' + s[0] + '<b>' + s[1] + "</b></div>"; }).join("");
+      card.innerHTML =
+        '<div class="match-top"><div><p class="match-name">' + p.name + '</p><p class="match-code">' + p.code + '</p></div><p class="match-price">' + p.price + '</p></div>' +
+        '<p class="match-tagline">' + p.tagline + '</p>' +
+        '<div class="match-specs">' + specsHtml + '</div>' +
+        '<a class="shop" href="' + p.url + '" target="_blank" rel="noopener">Shop ' + p.name + ' →</a>';
+      cardsEl.appendChild(card);
+    });
+
+    var rankEl = $("rank-list");
+    rankEl.innerHTML = "";
+    var max = Math.max.apply(null, PRODUCT_ORDER.map(function (c) { return scores[c]; })) || 1;
+    ranked.forEach(function (code) {
+      var isTop = winners.indexOf(code) !== -1;
+      var row = document.createElement("div");
+      row.className = "rank-row" + (isTop ? " top" : "");
+      var pct = Math.round((scores[code] / max) * 100);
+      row.innerHTML =
+        '<div class="rank-name">' + PRODUCTS[code].code + '</div>' +
+        '<div class="rank-bar-track"><div class="rank-bar-fill" style="width:' + pct + '%"></div></div>' +
+        '<div class="rank-score">' + scores[code] + '</div>';
+      rankEl.appendChild(row);
+    });
+  }
+
+  function setView(view) {
+    state.view = view;
+    $("view-intro").hidden = view !== "intro";
+    $("view-question").hidden = view !== "question";
+    $("view-result").hidden = view !== "result";
+  }
+
+  $("start-btn").addEventListener("click", function () {
+    state.qIndex = 0;
+    setView("question");
+    renderQuestion();
+  });
+  $("back-btn").addEventListener("click", function () {
+    if (state.qIndex > 0) { state.qIndex--; renderQuestion(); }
+  });
+  $("retake-btn").addEventListener("click", function () {
+    state.qIndex = 0;
+    state.answers = new Array(QUESTIONS.length).fill(null);
+    setView("intro");
+  });
+
+  buildLineupPreview();
+  setView("intro");
+})();
+</script>
